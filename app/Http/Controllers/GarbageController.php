@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Garbage;
 
 class GarbageController extends Controller
 {
     public function show($name)
     {
-        $garbages = Garbage::query()->where('name', 'like', "%$name%")->get();
+        $garbages = \DB::select("SELECT `garbages`.`name` AS `name`, `categories`.`name` AS `category` FROM `garbages` JOIN `categories` ON `garbages`.`category_id` = `categories`.`id` WHERE `garbages`.`name` LIKE '%$name%'");
     	return $garbages;
     }
 }
