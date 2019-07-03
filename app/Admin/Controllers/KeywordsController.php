@@ -2,20 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Category;
+use App\Keywords;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
-class CategoryController extends AdminController
+class KeywordsController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = 'App\Category';
+    protected $title = 'App\Keywords';
 
     /**
      * Make a grid builder.
@@ -24,11 +24,12 @@ class CategoryController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Category);
+        $grid = new Grid(new Keywords);
 
+      	$grid->model()->orderBy('id', 'desc');
         $grid->column('id', __('Id'));
         $grid->column('name', __('Name'));
-        $grid->column('style', __('Style'));
+        $grid->column('count', __('Count'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -43,11 +44,11 @@ class CategoryController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(Category::findOrFail($id));
+        $show = new Show(Keywords::findOrFail($id));
 
         $show->field('id', __('Id'));
         $show->field('name', __('Name'));
-        $show->field('style', __('Style'));
+        $show->field('count', __('Count'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -61,10 +62,10 @@ class CategoryController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Category);
+        $form = new Form(new Keywords);
 
         $form->text('name', __('Name'));
-        $form->textarea('style', __('Style'));
+        $form->number('count', __('Count'));
 
         return $form;
     }

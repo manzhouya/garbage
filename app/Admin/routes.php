@@ -15,5 +15,9 @@ Route::group([
   	$router->resource('categories', CategoryController::class);
   
   	$router->resource('garbages', GarbageController::class);
+  
+  	$router->resource('keywords', KeywordsController::class);
+  
+  	$router->resource('submits', SubmitsController::class);
 
 });
