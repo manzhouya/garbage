@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('garbages/{name?}', 'GarbageController@show');
+Route::get('garbagess', 'GarbageController@index');
 
 Route::get('keywords/{num?}', 'KeywordsController@show');
 

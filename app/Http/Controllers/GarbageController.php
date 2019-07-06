@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class GarbageController extends Controller
 {
@@ -26,6 +27,21 @@ class GarbageController extends Controller
           //  \DB::delete("DELETE FROM `keywords` WHERE `name` = '$name'");
           //}
         }
+      	return $garbages;
+    }
+  
+  	public function index()
+    {
+        $garbages = json_decode(Redis::get('garbages'));
+      	if(!$garbages){
+        	$garbages = \DB::select("SELECT * FROM `garbages`");
+            Redis::set('garbages', json_encode($garbages));
+        }
+      
+        $garbages = \Cache::remember('garbages', 24 * 60 * 60 * 7, function () {
+              return \DB::select("SELECT * FROM `garbages`");
+        });
+      
       	return $garbages;
     }
 }
